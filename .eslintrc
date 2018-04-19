@@ -20,4 +20,4 @@ rules:
   no-multi-spaces: [ 1 ]
   no-fallthrough: [ 0 ]
   'vue/require-v-for-key': 'off'
-  'vue/script-indent': [ 1, 2, { baseIndent: 1 }]
+  'vue/script-indent': [ 1, 4, { baseIndent: 1 }]
