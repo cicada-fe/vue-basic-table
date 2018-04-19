@@ -5,6 +5,7 @@ module.exports = {
     entry: './src/',
     output: {
         filename: 'vue-basic-table.js',
+        libraryTarget: "umd",
         path: resolve('dist'),
     },
     module: {
