@@ -163,13 +163,36 @@ export default {
     </basic-table>
 ```
 
-8. updateParameters {Function} 可以自定义接口中的参数，尤其是分页的参数
+8. formatResponseData {Function} 格式化响应的数据结构
 
 ```javascript
-      updateParameters(parameters) {
-          parameters.limit = 50;
-          return parameters;
-      }
+     formatResponseData(res) {
+         return {
+           data: res.bizData.rows, //返回数据
+           total: res.bizData.records, //总共记录数
+           limit: res.bizData.pagesize, //每页的条数
+           page: res.bizData.page
+         }
+     }
+```
+9. pageIndex, pageSize自定义分页参数的键值
+
+```javascript
+         pageIndex: {
+            type: String,
+            default: 'pageIndex'//默认值
+         },
+         pageSize: {
+            type: String,
+            default: 'pageSize'//默认值
+         }
+```
+```vue
+   <basic-table
+    :pageIndex="pageIndex"
+    :pageSize="pageSize">
+
+    </basic-table>
 ```
 
 ## 特殊功能介绍

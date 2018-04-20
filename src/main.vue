@@ -184,8 +184,19 @@
             data: Object,
             //表格参数设置
             options: Object,
-            //修改请求接口的参数
-            updateParameters: Function
+            // //修改请求接口的参数
+            // updateParameters: Function,
+            //格式化响应数据
+            formatResponseData: Function,
+            //自定义分页传参数的键值
+            pageIndex: {
+                type: String,
+                default: 'pageIndex'
+            },
+            pageSize: {
+                type: String,
+                default: 'pageSize'
+            }
         },
 
         watch: {
@@ -221,9 +232,25 @@
                 if (netInstance) {
                     netInstance.then(res => {
                         this.loading = false;
+                        if ('function' === typeof this.formatResponseData) {
 
-                        this.tableData = res.bizData.rows;
-                        this.tablePage.total = res.bizData.records;
+                            try {
+                                let { data, total, limit, page} = this.formatResponseData(res);
+                                if (!data || !Array.isArray(data)) {
+                                    throw 'vue-basic-table: response data is not Array or is undefined';
+                                } else {
+                                    this.tableData = data;
+                                    this.tablePage.total = total;
+                                }
+                            } catch (e) {
+                                throw 'vue-basic-table: function 【formatResponseData】 Should return a value';
+                            }
+
+                        } else {
+                            this.tableData = res.bizData.rows;
+                            this.tablePage.total = res.bizData.records;
+                        }
+
                     }, () => {
                         this.loading = false;
                     });
@@ -239,13 +266,13 @@
             //将组件外传的参数和分页参数合并
             getParameters() {
                 let parameters = Object.assign({}, this.parameters, {
-                    pageIndex: this.tablePage.currentPage,
-                    pageSize: this.tablePage.pageSize
+                    [this.pageIndex]: this.tablePage.currentPage,
+                    [this.pageSize]: this.tablePage.pageSize
                 });
                 //自定义接口请求的参数
-                if ('function' === typeof this.updateParameters) {
-                    parameters = this.updateParameters(parameters);
-                }
+                // if ('function' === typeof this.updateParameters) {
+                //   parameters = this.updateParameters(parameters);
+                // }
                 return parameters;
             },
             //GET
