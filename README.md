@@ -163,6 +163,15 @@ export default {
     </basic-table>
 ```
 
+8. updateParameters {Function} 可以自定义接口中的参数，尤其是分页的参数
+
+```javascript
+      updateParameters(parameters) {
+          parameters.limit = 50;
+          return parameters;
+      }
+```
+
 ## 特殊功能介绍
 ***
 1. 添加操作列

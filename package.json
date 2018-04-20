@@ -1,6 +1,6 @@
 {
   "name": "vue-basic-table",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "基于element-UI的Table组件和Pagination组件形成的终极saas平台的Table组件",
   "main": "dist/vue-basic-table.js",
   "scripts": {

@@ -183,7 +183,9 @@
             //POST请求接口时候传的数据,放在body里面
             data: Object,
             //表格参数设置
-            options: Object
+            options: Object,
+            //修改请求接口的参数
+            updateParameters: Function
         },
 
         watch: {
@@ -236,10 +238,15 @@
             },
             //将组件外传的参数和分页参数合并
             getParameters() {
-                return Object.assign({}, this.parameters, {
+                let parameters = Object.assign({}, this.parameters, {
                     pageIndex: this.tablePage.currentPage,
                     pageSize: this.tablePage.pageSize
                 });
+                //自定义接口请求的参数
+                if ('function' === typeof this.updateParameters) {
+                    parameters = this.updateParameters(parameters);
+                }
+                return parameters;
             },
             //GET
             getDataByGet() {
