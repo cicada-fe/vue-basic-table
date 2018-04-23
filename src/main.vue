@@ -44,9 +44,9 @@
         <slot name="prepend" />
 
         <el-table-column
-                v-if="options.selection"
+                v-if="tableOptions.selection"
                 type="selection"
-                :width="options.selectionWidth">
+                :width="tableOptions.selectionWidth">
         </el-table-column>
 
         <el-table-column
