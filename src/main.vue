@@ -76,14 +76,19 @@
                 :filtered-value="column.filteredValue">
 
           <!--表格特殊列处理-->
-          <template slot-scope="scope">
-              <span v-if="column.slotName">
-                <slot :name="column.slotName" :row="scope.row" />
-              </span>
-            <span v-else>
-                {{ scope.row[column.prop] }}
-              </span>
-          </template>
+          <span v-if="column.slotName">
+            <template slot-scope="scope">
+              <slot :name="column.slotName" :row="scope.row" />
+            </template>
+          </span>
+          <!--<template slot-scope="scope">-->
+          <!--<span v-if="column.slotName">-->
+          <!--<slot :name="column.slotName" :row="scope.row" />-->
+          <!--</span>-->
+          <!--<span v-else>-->
+          <!--{{ scope.row[column.prop] }}-->
+          <!--</span>-->
+          <!--</template>-->
 
         </el-table-column>
 
@@ -196,7 +201,8 @@
             pageSize: {
                 type: String,
                 default: 'pageSize'
-            }
+            },
+            mockData: Object
         },
 
         watch: {
@@ -224,6 +230,10 @@
         methods: {
             getTableDataList() {
                 if (!this.url) {
+                    if (this.mockData) {
+                        this.tableData = this.mockData.data;
+                        this.tablePage.total = this.mockData.total;
+                    }
                     return;
                 }
 
